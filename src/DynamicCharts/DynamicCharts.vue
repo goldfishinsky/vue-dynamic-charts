@@ -145,9 +145,10 @@ export default {
             //state
             dataQueue: [], //数据源
             activeItemIdx: 0, //第几帧
+            nextValues: {}, //下一帧数据
             highestValue: 0, //榜首数据
             currentValues: {}, //经过处理后用于渲染的数据数组 
-            firstRun: false, //第一次动态渲染时间
+            firstRun: false, //是否是初始渲染
             isClicked: false, //
             iterationTimeoutHolder: null
         }
@@ -173,7 +174,6 @@ export default {
     },
     methods: {
         
-        //统一管理props数据
         init() {
             
             //设置数据源
@@ -190,7 +190,7 @@ export default {
             if (this.startAutomatically) {
                 this.start();
             } else {
-                this.setNextValue();
+                this.setNextValues();
             }
         },
         //设置触发动态间隔
@@ -204,6 +204,40 @@ export default {
 
         start() {
 
+            //不是第一帧的话，直接return
+            if (this.activeItemIdx > 1) {
+                return;
+            }
+
+            //如果有起始回调，执行回调
+            if (this.onRunStart) {
+                this.onRunStart();
+            }
+            this.firstRun = true;
+            this.setNextValues();
+        },
+
+        //更新下一组数据
+        setNextValues() {
+
+            //当前帧的数据
+            const roundData =this.dataQueue[this.activeItemIdx];
+            const nextValues = {};
+            let highestValue = 0;
+            //判断是否遍历结束
+            if (!roundData) {
+                // this.iterationTimeoutHolder = null;
+
+                //执行结束回调
+                if (this.onRunEnd) {
+                    this.onRunEnd();
+                }
+                return;
+            }
+
+            
+            
+
         },
 
         //随机生成颜色值
@@ -215,6 +249,8 @@ export default {
             }
             return color;
         }
+
+        //TODO 用户可设置主题色改变主题
     }
 }
 </script>
