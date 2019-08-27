@@ -1,17 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <DynamicCharts
+    :showStartButton="true"
+    :startButtonText="'开始'"
+    :barGapSize="10"
+    :barHeight="30"
+    :data="data"
+    :iterationTimeout="1000"
+    :showTitle="true"
+    :startRunningTimeout="2500"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+// import HelloWorld from './components/HelloWorld.vue'
+import helpers from "./mock/helpers";
+import mocks from "./mock/mocks";
+import DynamicCharts from './DynamicCharts/index'
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    // HelloWorld,
+    DynamicCharts
+  },
+  computed: {
+    data() {
+      return helpers.generateData(100, mocks.defaultChart, {
+        prefix: "Iteration"
+      });
+    }
   }
 }
 </script>
