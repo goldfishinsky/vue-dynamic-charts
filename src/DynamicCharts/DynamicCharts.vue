@@ -1,6 +1,5 @@
 <template>
     <div class="live-chart">
-        <div>hello my dymaic charts</div>
         <div>
             <h1 v-if="showTitle" >{{currentItem.name}}</h1>
             <!-- 开始按钮 -->
@@ -20,7 +19,6 @@
                          :key="`bar${key}`">
                          <!-- bar前的标志（图标或字体） -->
                         <label :style="labelStyles">{{currentValues[key].label ? currentValues[key].label : key}}</label>
-
                         <!-- bar -->
                         <div class="bar" :style="{ height: barHeight + 'px', width: getBarWidth(key), background: typeof currentValues[key].color === 'string' ? currentValues[key].color : `linear-gradient(to right, ${currentValues[key].color.join(',')})` }" />
                         <!--value -->
@@ -156,6 +154,7 @@ export default {
              */
             let keys = Object.keys(this.currentValues);
             let sorts =  keys.sort((a,b) => this.currentValues[b].value - this.currentValues[a].value);
+            // eslint-disable-next-line
             console.log('sorts',sorts)
             return sorts
         },
