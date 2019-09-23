@@ -178,8 +178,6 @@ export default {
             
             //设置数据源
             this.dataQueue = this.data;
-
-            //触发动态
             this.emitDymatic();
 
             this.setTimeBetweenStart();
@@ -193,6 +191,7 @@ export default {
                 this.setNextValues();
             }
         },
+
         //设置触发动态间隔
         setTimeBetweenStart() {
             if (this.startAutomatically) {
